@@ -783,25 +783,17 @@ void ScreenRecoveryUI::draw_menu_and_text_buffer_locked(
     const std::vector<std::string>& help_message) {
   int y = margin_height_;
 
-  if (fastbootd_logo_ && fastbootd_logo_enabled_) {
-    // Try to get this centered on screen.
-    auto width = gr_get_width(fastbootd_logo_.get());
-    auto height = gr_get_height(fastbootd_logo_.get());
-    auto centered_x = ScreenWidth() / 2 - width / 2;
-    DrawSurface(fastbootd_logo_.get(), 0, 0, width, height, centered_x, y);
-    y += height;
-  }
-
   if (menu_) {
     int x = margin_width_ + kMenuIndent;
 
     SetColor(UIElement::INFO);
 
-    if (pegasus_logo_ && back_icon_) {
-      auto logo_width = gr_get_width(pegasus_logo_.get());
-      auto logo_height = gr_get_height(pegasus_logo_.get());
+    auto& logo = fastbootd_logo_enabled_ ? fastbootd_logo_ : pegasus_logo_;
+    if (logo && back_icon_) {
+      auto logo_width = gr_get_width(logo.get());
+      auto logo_height = gr_get_height(logo.get());
       auto centered_x = ScreenWidth() / 2 - logo_width / 2;
-      DrawSurface(pegasus_logo_.get(), 0, 0, logo_width, logo_height, centered_x, y);
+      DrawSurface(logo.get(), 0, 0, logo_width, logo_height, centered_x, y);
       y += logo_height;
 
       if (!menu_->IsMain()) {
@@ -1317,8 +1309,8 @@ int ScreenRecoveryUI::SelectMenu(const Point& point) {
   if (menu_) {
     if (!menu_->IsMain()) {
       // Back arrow hitbox
-      const static int logo_width = gr_get_width(lineage_logo_.get());
-      const static int logo_height = gr_get_height(lineage_logo_.get());
+      const static int logo_width = gr_get_width(pegasus_logo_.get());
+      const static int logo_height = gr_get_height(pegasus_logo_.get());
       const static int icon_w = gr_get_width(back_icon_.get());
       const static int icon_h = gr_get_height(back_icon_.get());
       const static int centered_x = ScreenWidth() / 2 - logo_width / 2;
