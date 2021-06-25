@@ -127,7 +127,7 @@ class TextMenu : public Menu {
   size_t MenuEnd() const;
 
   // Menu example:
-  // info:                           Paranoid Recovery
+  // info:                           Styx Recovery
   //                                 ....
   // help messages:                  Swipe up/down to move
   //                                 Swipe left/right to select
